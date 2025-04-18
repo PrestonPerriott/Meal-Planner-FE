@@ -24,6 +24,7 @@ const GroceryItem = ({ item, onSelect, isSelected }) => {
   return (
     <Card 
       sx={{ 
+        width: '100%',
         height: '100%', 
         display: 'flex', 
         flexDirection: 'column',
@@ -35,9 +36,21 @@ const GroceryItem = ({ item, onSelect, isSelected }) => {
         }
       }}
     >
-      <CardContent sx={{ flexGrow: 1 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <Typography variant="h6" component="div" gutterBottom>
+      <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+          <Typography 
+            variant="h6" 
+            component="div" 
+            sx={{ 
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              lineHeight: '1.2em',
+              height: '2.4em'
+            }}
+          >
             {name}
           </Typography>
           <Tooltip title="View details">
@@ -62,9 +75,11 @@ const GroceryItem = ({ item, onSelect, isSelected }) => {
           />
         </Box>
         
-        <Typography variant="h5" color="text.primary">
-          {formattedPrice}
-        </Typography>
+        <Box sx={{ mt: 'auto' }}>
+          <Typography variant="h5" color="text.primary">
+            {formattedPrice}
+          </Typography>
+        </Box>
       </CardContent>
       
       <CardActions>
