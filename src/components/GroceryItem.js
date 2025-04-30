@@ -14,11 +14,11 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const GroceryItem = ({ item, onSelect, isSelected }) => {
-  const { name, type, chain, price, unit } = item;
+  const { name, type, chain, price, uom } = item;
 
   // Format price safely, handling null or undefined values
   const formattedPrice = price !== null && price !== undefined 
-    ? `$${price.toFixed(2)}${unit ? `/${unit}` : ''}` 
+    ? `$${price.toFixed(2)} ${uom ? ` ${uom}` : ''}` 
     : 'Price not available';
 
   return (

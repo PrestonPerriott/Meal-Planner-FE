@@ -13,7 +13,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon
+  ListItemIcon,
+  TextField
 } from '@mui/material';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -22,6 +23,7 @@ import { generateRecipe } from '../services/llmService';
 const RecipeGenerator = ({ selectedItems, onClearSelection }) => {
   const [loading, setLoading] = useState(false);
   const [recipe, setRecipe] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
 
   const handleGenerateRecipe = async () => {
@@ -41,9 +43,17 @@ const RecipeGenerator = ({ selectedItems, onClearSelection }) => {
 
   const handleClearAll = () => {
     onClearSelection();
+    setSearchTerm('');
     setRecipe(null);
     setError(null);
   };
+
+  const handleCuisine = () => (event) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+    // TODO: Call generate-meals API w/ the updated cuisine input
+    // TODO: Add auto-correct
+  }
 
   if (selectedItems.length === 0) {
     return (
@@ -97,6 +107,13 @@ const RecipeGenerator = ({ selectedItems, onClearSelection }) => {
         >
           Clear Selection
         </Button>
+        <TextField
+          label="Cuisine Type"
+          variant="outlined"
+          value={searchTerm}
+          onChange={handleCuisine()}
+          sx={{ minWidth: 200 }}
+        />
       </Box>
       
       {loading && (

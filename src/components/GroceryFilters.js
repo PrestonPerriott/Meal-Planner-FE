@@ -12,7 +12,6 @@ import {
   Chip,
   Paper
 } from '@mui/material';
-import { fetchGroceryByChain, fetchGroceryByType } from '../services/api';
 
 const GroceryFilters = ({ onFilterChange }) => {
   const [chains, setChains] = useState([]);
@@ -20,15 +19,18 @@ const GroceryFilters = ({ onFilterChange }) => {
   const [filters, setFilters] = useState({
     type: '',
     chain: '',
-    priceRange: [0, 50],
+    priceRange: [0, 100],
     searchTerm: '',
   });
 
   useEffect(() => {
     const loadFilterOptions = async () => {
       try {
-        const chainsData = await fetchGroceryByChain();
-        const typesData = await fetchGroceryByType();
+        // Since we are using cached data, we don't need to fetch from the API
+        // Could filter the chains and types based on the cached data
+        const allGroceries = JSON.parse(localStorage.getItem('groceryItems'));
+        const chainsData = [...new Set(allGroceries.map(item => item.chain))];
+        const typesData = [...new Set(allGroceries.map(item => item.type))];
         setChains(chainsData);
         setTypes(typesData);
       } catch (error) {
@@ -62,7 +64,7 @@ const GroceryFilters = ({ onFilterChange }) => {
     setFilters({
       type: '',
       chain: '',
-      priceRange: [0, 50],
+      priceRange: [0, 100],
       searchTerm: '',
     });
     onFilterChange({});
