@@ -31,7 +31,8 @@ const RecipeGenerator = ({ selectedItems, onClearSelection }) => {
     setError(null);
     
     try {
-      const generatedRecipe = await generateRecipe(selectedItems);
+      const selectedIds = selectedItems.map(item => item.id);
+      const generatedRecipe = await generateRecipe(selectedIds);
       setRecipe(generatedRecipe);
     } catch (error) {
       setError('Failed to generate recipe. Please try again.');
